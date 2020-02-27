@@ -42,10 +42,15 @@ const CGPoint CLNTextOrigin = { 12, 7 };
     self.layer.masksToBounds = YES;
 }
 
-// TODO: Lazily initialize the dictionary
+
 + (NSDictionary *)textAttributes {
-    return @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:20],
-              NSForegroundColorAttributeName: UIColor.whiteColor };
+    static NSDictionary *attributes;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        attributes = @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:20],
+                        NSForegroundColorAttributeName: UIColor.whiteColor };
+    });
+    return attributes;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -67,7 +72,6 @@ const CGPoint CLNTextOrigin = { 12, 7 };
     self.transform = CGAffineTransformRotate(translation, M_PI_2);
 }
 
-// FIXME: Clean up! Also, weakify self reference.
 - (void)animateBounceWithDuration:(NSTimeInterval)duration size:(CGSize)size {
     typeof(self) __weak weakSelf = self;
     [UIView animateWithDuration:duration
