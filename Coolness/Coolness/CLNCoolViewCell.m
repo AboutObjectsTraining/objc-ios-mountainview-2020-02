@@ -51,7 +51,6 @@ const CGPoint CLNTextOrigin = { 12, 7 };
 - (void)setHighlighted:(BOOL)highlighted {
     _highlighted = highlighted;
     self.alpha = highlighted ? 0.5 : 1.0;
-//    [self setAlpha:highlighted ? 0.5 : 1.0];
 }
 
 // MARK: - Animation
@@ -61,18 +60,19 @@ const CGPoint CLNTextOrigin = { 12, 7 };
     [self animateBounceWithDuration:1 size:CGSizeMake(120, 240)];
 }
 
+- (void)configureAnimationWithSize:(CGSize)size {
+    [UIView setAnimationRepeatCount:5];
+    [UIView setAnimationRepeatAutoreverses:YES];
+    CGAffineTransform translation = CGAffineTransformMakeTranslation(size.width, size.height);
+    self.transform = CGAffineTransformRotate(translation, M_PI_2);
+}
+
 // FIXME: Clean up! Also, weakify self reference.
 - (void)animateBounceWithDuration:(NSTimeInterval)duration size:(CGSize)size {
+    typeof(self) __weak weakSelf = self;
     [UIView animateWithDuration:duration
-                     animations:^{
-        [UIView setAnimationRepeatCount:3];
-        [UIView setAnimationRepeatAutoreverses:YES];
-        CGAffineTransform translation = CGAffineTransformMakeTranslation(size.width, size.height);
-        self.transform = CGAffineTransformRotate(translation, M_PI_2);
-    }
-                     completion:^(BOOL finished) {
-        self.transform = CGAffineTransformIdentity;
-    }];
+                     animations:^{ [weakSelf configureAnimationWithSize:size]; }
+                     completion:^(BOOL finished) { weakSelf.transform = CGAffineTransformIdentity; }];
 }
 
 
