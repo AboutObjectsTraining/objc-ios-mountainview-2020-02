@@ -12,9 +12,11 @@ const UIEdgeInsets CLNTextInsets = {
 
 const CGPoint CLNTextOrigin = { 12, 7 };
 
-@interface CLNCoolViewCell ()
+IB_DESIGNABLE @interface CLNCoolViewCell ()
+
 @property (assign, nonatomic) BOOL highlighted;
 @property (class, readonly, nonatomic) NSDictionary *textAttributes;
+
 @end
 
 @implementation CLNCoolViewCell
@@ -27,6 +29,16 @@ const CGPoint CLNTextOrigin = { 12, 7 };
     
     return self;
 }
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if (!(self = [super initWithCoder:coder])) return nil;
+    
+    [self configureLayer];
+    [self configureGestureRecognizers];
+    
+    return self;
+}
+
 
 - (void)configureGestureRecognizers {
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bounce)];

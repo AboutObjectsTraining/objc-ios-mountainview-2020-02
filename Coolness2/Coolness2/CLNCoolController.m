@@ -24,6 +24,21 @@
     [self.contentView addSubview:newCell];
 }
 
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+//    CLNCoolViewCell *subview1 = [[CLNCoolViewCell alloc] initWithFrame:CGRectMake(20, 60, 200, 40)];
+//    CLNCoolViewCell *subview2 = [[CLNCoolViewCell alloc] initWithFrame:CGRectMake(50, 120, 200, 40)];
+//
+//    subview1.text = @"Hello World! 🌍🌎🌏🪐";
+//    subview2.text = @"Cool View Cells Rock! 🎉🍾";
+//
+//    [self.contentView addSubview:subview1];
+//    [self.contentView addSubview:subview2];
+//
+//    subview1.backgroundColor = UIColor.systemPurpleColor;
+//    subview2.backgroundColor = UIColor.orangeColor;
+//}
+
 - (void)loadView1 {
     [NSBundle.mainBundle loadNibNamed:@"CoolStuff" owner:self options:nil];
 }
